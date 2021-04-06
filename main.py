@@ -4,8 +4,6 @@ import math
 from random import *
 from tkinter import messagebox
 
-from pygame.constants import QUIT
-
 # Initialize the pygame
 pygame.init()
 
@@ -33,12 +31,12 @@ enemyImg = []
 enemyX = []
 enemyY = []
 enemyY_move = []
-num_of_enemies = 2
+num_of_enemies = 3
 for i in range(num_of_enemies):
     enemyImg.append(pygame.image.load('enemy.png'))
     enemyX.append(randint(0, 736))
     enemyY.append(0)
-    enemyY_move.append(random() * 0.25)
+    enemyY_move.append(random() * 0.3)
 
 # Bullet
 # Ready - can't see bullet on the screen
@@ -71,6 +69,7 @@ def isCollision(X1, Y1, X2, Y2):
 
 # Game Loop
 running = True
+flag = False
 while running:
     # Setting Background No.1
     # RGB Setting - Red Green Blue
@@ -133,7 +132,11 @@ while running:
     for i in range(num_of_enemies):
         fin_collision = isCollision(enemyX[i], enemyY[i], playerX, playerY)
         if fin_collision:
+            flag = True
             messagebox.showinfo("Game Over!", "Your Score is " + score)
-
+        if flag:
+            break
+    if flag:
+        break
     player(playerX, playerY)
     pygame.display.update()
